@@ -1,6 +1,7 @@
 import About from "@/app/components/About";
 import CarouselHome from "@/app/components/CarouselHome";
 import NavBar from "@/app/components/Navbar";
+import News from "@/app/components/NewsHome";
 import { homePageModel, NavbarItem } from "@/app/models/homePageModel";
 import { fetchHomeData } from "@/app/redux/homePageSlice";
 import { wrapper } from "@/app/redux/store";
@@ -10,7 +11,7 @@ interface NavBarItem {
   Label: string;
   Link: string;
   IsShown: boolean;
-  SubItem: NavBarItem[]; // Recursive type for sub-items
+  SubItem: NavBarItem[];
 }
 interface CarouselItemImage {
   url: string;
@@ -21,7 +22,7 @@ interface CarouselItem {
   Link: string;
   Description: string;
   LinkLabel: string;
-  Image: CarouselItemImage; // Recursive type for sub-items
+  Image: CarouselItemImage;
 }
 interface AboutImage {
   url: string;
@@ -31,9 +32,19 @@ interface IAbout {
   Title: string;
   Link: string;
   Description: string;
-  Image: AboutImage; // Recursive type for sub-items
+  Image: AboutImage;
 }
-
+interface NewsImages {
+  url: string;
+}
+interface INews {
+  id: number;
+  Title: string;
+  // Link: string;
+  Description: string;
+  Image: NewsImages[];
+  Date: Date;
+}
 interface HomePageProps {
   //homePageData: homePageModel;
   loading: boolean;
@@ -41,6 +52,7 @@ interface HomePageProps {
   navbarItems: NavBarItem[] | [];
   carouselItems: CarouselItem[] | [];
   about: IAbout[] | [];
+  news: INews[] | [];
 }
 const page: React.FC<HomePageProps> = ({
   //homePageData,
@@ -49,6 +61,7 @@ const page: React.FC<HomePageProps> = ({
   navbarItems,
   carouselItems,
   about,
+  news,
 }) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -56,7 +69,8 @@ const page: React.FC<HomePageProps> = ({
     <div>
       <NavBar navbarItems={navbarItems} />
       <CarouselHome carouselItems={carouselItems} />
-      <About about={about} />
+      <News news={news} />
+      {/* <About about={about} /> */}
     </div>
   );
 };
@@ -120,10 +134,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
     );
 
     console.log(
-      "LAbout:",
+      "LNews:",
       state.homePage.homePageData
-        ? state.homePage.homePageData.data?.ContentHomePage.filter(
-            (item: any) => item.__component === "about.about"
+        ? JSON.parse(
+            JSON.stringify(
+              state.homePage.homePageData?.data?.news_collections[0]
+            )
           )
         : []
     );
@@ -154,6 +170,24 @@ export const getServerSideProps = wrapper.getServerSideProps(
         about: state.homePage.homePageData
           ? state.homePage.homePageData.data?.ContentHomePage.filter(
               (item: any) => item.__component === "about.about"
+            )
+          : [],
+        // news:
+        //   state.homePage.homePageData?.data?.ContentHomePage.filter(
+        //     (item: any) => item.__component === "news.news"
+        //   )
+        //     .flatMap((newsItem: any) => newsItem.news_collections || [])
+        //     .map((collection: any) => ({
+        //       id: collection.id,
+        //       Title: collection.Title,
+        //       Description: collection.Description,
+        //       Date: collection.Date,
+        //     })) || [],
+        news: state.homePage.homePageData
+          ? JSON.parse(
+              JSON.stringify(
+                state.homePage.homePageData?.data?.news_collections
+              )
             )
           : [],
         //homePageData: serializedHomePageData,

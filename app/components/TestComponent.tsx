@@ -1,91 +1,4 @@
-// import React from "react";
-// import Image from "next/image";
-// import Slider from "react-slick";
-
-// // Import slick-carousel CSS
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-
-// interface CarouselItem {
-//   id: number;
-//   Title: string;
-//   Link: string;
-//   Description: string;
-//   LinkLabel: string;
-//   Image: CarouselItemImage;
-// }
-
-// interface CarouselItemImage {
-//   url: string;
-// }
-
-// interface CarouselProps {
-//   carouselItems: CarouselItem[] | [];
-// }
-
-// const CarouselHome: React.FC<CarouselProps> = ({ carouselItems }) => {
-//   // Slick slider settings
-//   const sliderSettings = {
-//     dots: true,
-//     infinite: true,
-//     speed: 500,
-//     slidesToShow: 1,
-//     slidesToScroll: 1,
-//     autoplay: true,
-//     autoplaySpeed: 3000,
-//     responsive: [
-//       {
-//         breakpoint: 1024, // For tablets
-//         settings: {
-//           slidesToShow: 1,
-//         },
-//       },
-//       {
-//         breakpoint: 768, // For mobile devices
-//         settings: {
-//           slidesToShow: 1,
-//         },
-//       },
-//       {
-//         breakpoint: 576, // For extra-small devices
-//         settings: {
-//           slidesToShow: 1,
-//         },
-//       },
-//     ],
-//   };
-
-//   return (
-//     <Slider {...sliderSettings}>
-//       {carouselItems.map((item) => (
-//         <div className="carousel-item px-2" key={item.id}>
-//           {/* Image Component for optimized image rendering */}
-//           <Image
-//             src={`http://127.0.0.1:1337${item.Image.url}`}
-//             alt={item.Title}
-//             width={800}
-//             height={400}
-//             className="w-full h-auto rounded-lg"
-//           />
-//           <div className="p-4 bg-white text-center rounded-b-lg shadow-md">
-//             <h5 className="text-lg font-semibold">{item.Title}</h5>
-//             <p className="text-sm text-gray-600">{item.Description}</p>
-//             <a
-//               href={item.Link}
-//               className="inline-block mt-2 text-blue-600 hover:text-blue-800 font-medium"
-//             >
-//               {item.LinkLabel}
-//             </a>
-//           </div>
-//         </div>
-//       ))}
-//     </Slider>
-//   );
-// };
-
-// export default CarouselHome;
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 interface CarouselItem {
   id: number;
@@ -104,17 +17,8 @@ interface CarouselProps {
   carouselItems: CarouselItem[] | [];
 }
 
-const CarouselHome: React.FC<CarouselProps> = ({ carouselItems }) => {
+const TestComponent: React.FC<CarouselProps> = ({ carouselItems }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentSlideIndex((prevIndex) =>
-  //       prevIndex === carouselItems.length - 1 ? 0 : prevIndex + 1
-  //     );
-  //   }, 1000); // Change slides every 3 seconds
-
-  //   return () => clearInterval(interval); // Cleanup interval on unmount
-  // }, [carouselItems.length]);
 
   const previous = () => {
     setCurrentSlideIndex((prevIndex) =>
@@ -129,11 +33,11 @@ const CarouselHome: React.FC<CarouselProps> = ({ carouselItems }) => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden -z-9">
+    <div className="relative w-full overflow-hidden">
       {/* Previous Button */}
       <button
         type="button"
-        className="absolute left-5 top-1/2 z-20 flex rounded-full -translate-y-1/2 items-center justify-center bg-white/40 p-2 text-neutral-600 transition hover:bg-rose-900 hover:text-white"
+        className="absolute left-5 top-1/2 z-20 flex rounded-full -translate-y-1/2 items-center justify-center bg-white/40 p-2 text-neutral-600 transition hover:bg-white/60"
         aria-label="previous slide"
         onClick={previous}
       >
@@ -157,7 +61,7 @@ const CarouselHome: React.FC<CarouselProps> = ({ carouselItems }) => {
       {/* Next Button */}
       <button
         type="button"
-        className="absolute right-5 top-1/2 z-20 flex rounded-full -translate-y-1/2 items-center justify-center bg-white/40 p-2 text-neutral-600 transition hover:bg-rose-900 hover:text-white"
+        className="absolute right-5 top-1/2 z-20 flex rounded-full -translate-y-1/2 items-center justify-center bg-white/40 p-2 text-neutral-600 transition hover:bg-white/60"
         aria-label="next slide"
         onClick={next}
       >
@@ -217,8 +121,10 @@ const CarouselHome: React.FC<CarouselProps> = ({ carouselItems }) => {
         {carouselItems.map((_, index) => (
           <button
             key={index}
-            className={`size-2 cursor-pointer w-5 h-1 transition ${
-              currentSlideIndex === index ? "bg-rose-900" : "bg-neutral-300/50"
+            className={`size-2 cursor-pointer rounded-full transition ${
+              currentSlideIndex === index
+                ? "bg-neutral-300"
+                : "bg-neutral-300/50"
             }`}
             aria-label={`Slide ${index + 1}`}
             onClick={() => setCurrentSlideIndex(index)}
@@ -229,4 +135,4 @@ const CarouselHome: React.FC<CarouselProps> = ({ carouselItems }) => {
   );
 };
 
-export default CarouselHome;
+export default TestComponent;

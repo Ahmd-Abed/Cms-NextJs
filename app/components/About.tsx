@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 interface AboutImage {
   url: string;
 }
@@ -26,6 +27,13 @@ const About: React.FC<AboutProps> = ({ about }) => {
     <div className="bg-rose-700">
       <p>{about[0].Title}</p>
       <p>{about[0].Description}</p>
+      <Image
+        src={`http://127.0.0.1:1337${about[0].Image.url}`}
+        alt={about[0].Title}
+        width={800}
+        height={400}
+        className="d-block w-full"
+      />
     </div>
   );
 };

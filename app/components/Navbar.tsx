@@ -30,7 +30,7 @@ const NavBar: React.FC<NavbarProps> = ({ navbarItems }) => {
               </a>
               {/* Dropdown Menu */}
               {item.SubItem && (
-                <ul className="absolute hidden group-hover:block z-10 w-28">
+                <ul className="absolute hidden group-hover:block z-20 w-28">
                   {item.SubItem.map((subLink, subIndex) => (
                     <li
                       key={subIndex}
