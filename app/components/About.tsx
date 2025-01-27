@@ -1,39 +1,50 @@
 import React from "react";
-import Image from "next/image";
+
 interface AboutImage {
   url: string;
 }
+
 interface IAbout {
   id: number;
   Title: string;
   Link: string;
   Description: string;
-  Image: AboutImage; // Recursive type for sub-items
+  Image: AboutImage;
 }
+
 interface AboutProps {
   about: IAbout[] | [];
 }
 
 const About: React.FC<AboutProps> = ({ about }) => {
+  if (about.length === 0) return null; // Handle case where 'about' is empty
+
   return (
-    // <div>
-    //   {about.map((item) => (
-    //     <div>
-    //       <p>{item.Title}</p>
-    //       <p>{item.Description}</p>
-    //     </div>
-    //   ))}
-    // </div>
-    <div className="bg-rose-700">
-      <p>{about[0].Title}</p>
-      <p>{about[0].Description}</p>
-      <Image
-        src={`http://127.0.0.1:1337${about[0].Image.url}`}
-        alt={about[0].Title}
-        width={800}
-        height={400}
-        className="d-block w-full"
-      />
+    <div className="p-6" dir="rtl">
+      {/* Header Section */}
+      <div className="background-color text-white text-center py-3 rounded-md mb-4">
+        <h2 className="text-xl font-bold">من نحن؟</h2>
+      </div>
+      {/* Grey Background Div */}
+      <div className="bg-gray-200 flex p-4 rounded-md">
+        {/* Image Section */}
+        <div className="w-1/2">
+          <img
+            src={`http://127.0.0.1:1337${about[0].Image.url}`}
+            alt={about[0].Title}
+            className="w-full h-auto rounded-md"
+          />
+        </div>
+
+        {/* Text Section with Flex Column and Space Between */}
+        <div className="w-1/2 pr-4 flex flex-col justify-between">
+          <h1 className="text-2xl font-bold text-black mb-2">
+            {about[0].Title}
+          </h1>
+          <div className="flex-grow" /> {/* Spacer */}
+          <p className="text-lg text-gray-700">{about[0].Description}</p>
+        </div>
+      </div>
     </div>
   );
 };

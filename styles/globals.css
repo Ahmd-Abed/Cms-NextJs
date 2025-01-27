@@ -31,3 +31,51 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+.small-mt {
+  margin-top: 4px;
+}
+.z-index {
+  position: relative;
+  z-index: 1000;
+}
+.custom-color {
+  border-color: #79133e;
+  border-style: solid;
+}
+.position-center {
+  display: flex;
+  justify-content: center;
+}
+
+.border-custom {
+  border-bottom: 2px solid #79133e;
+}
+.border-custom-animation-bottom::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 4px;
+  background-color: #79133e;
+  transition: width 0.5s ease;
+}
+.border-custom-animation-bottom:hover::after {
+  width: 50%;
+}
+.border-custom-animation-right:hover {
+  color: #79133e;
+}
+.border-custom-animation-right::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 100%;
+  background-color: #79133e;
+  transition: width 0.3s ease;
+}
+.border-custom-animation-right:hover::before {
+  width: 5px;
+}
+.background-color {
+  background-color: #79133e;
+}

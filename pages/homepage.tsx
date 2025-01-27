@@ -70,7 +70,7 @@ const page: React.FC<HomePageProps> = ({
       <NavBar navbarItems={navbarItems} />
       <CarouselHome carouselItems={carouselItems} />
       <News news={news} />
-      {/* <About about={about} /> */}
+      <About about={about} />
     </div>
   );
 };
