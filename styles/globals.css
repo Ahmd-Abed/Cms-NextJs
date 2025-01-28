@@ -51,12 +51,15 @@ body {
   border-bottom: 2px solid #79133e;
 }
 .border-custom-animation-bottom::after {
+  position: absolute;
   content: "";
   display: block;
   width: 0;
   height: 4px;
   background-color: #79133e;
   transition: width 0.5s ease;
+  margin-bottom: 4px;
+  z-index: 3000;
 }
 .border-custom-animation-bottom:hover::after {
   width: 50%;
@@ -78,4 +81,33 @@ body {
 }
 .background-color {
   background-color: #79133e;
+}
+.footer {
+  background: #79133e url("@/footer-maroon-bg.png") center no-repeat;
+  background-size: cover;
+  color: #fff;
+  margin-top: 0rem;
+}
+.fade-in {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.foot-links::after {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 0;
+  right: 0;
+  height: 4px;
+  background-color: #ffff;
+  transition: width 0.5s ease;
+}
+.foot-links:hover::after {
+  width: 10%;
 }

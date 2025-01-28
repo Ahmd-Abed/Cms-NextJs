@@ -67,7 +67,7 @@ const NavBar: React.FC<NavbarProps> = ({ navbarItems }) => {
                         />
                       </svg>
                     </button>
-                    <div className="absolute hidden  group-hover:block bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 small-mt">
+                    <div className="absolute hidden  group-hover:block bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 ">
                       <ul className="py-2 text-sm text-gray-700 dark:text-gray-400">
                         {item.SubItem.map((subItem) => (
                           <li

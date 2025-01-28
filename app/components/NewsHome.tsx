@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import moment from "moment";
+
 interface NewsImages {
   url: string;
 }
@@ -17,19 +18,43 @@ interface NewsProps {
 }
 
 const News: React.FC<NewsProps> = ({ news }) => {
-  console.log("Awel news:", news[0].Image[0].url);
+  const newsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            const target = entry.target as HTMLElement;
+            target.classList.add("visible");
+            target.style.transitionDelay = `${index * 0.7}s`;
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const elements = newsRef.current?.querySelectorAll(".fade-in");
+    elements?.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   const sortedNews = [...news].sort(
     (a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime()
   );
+
   return (
     <div
+      ref={newsRef}
       dir="rtl"
-      className="flex flex-wrap justify-around m-4 rtl text-right "
+      className="flex flex-wrap justify-around m-4 rtl text-right"
     >
       {sortedNews.map((item) => (
         <div
           key={item.id}
-          className=" max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+          className="fade-in opacity-0 transform translate-y-1 transition-all duration-1000 mb-2 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
         >
           <a href="#">
             <img
@@ -50,23 +75,9 @@ const News: React.FC<NewsProps> = ({ news }) => {
             <p className="mb-3 text-sm text-gray-500 dark:text-gray-400">
               {moment(item.Date).locale("ar").format("DD MMMM YYYY")}
             </p>
-            {/* <p className="mb-3 text-sm text-gray-500 dark:text-gray-400">
-              {new Date(item.Date).toLocaleDateString("ar-SA", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-              })}
-            </p> */}
-            {/* <p className="mb-3 text-sm text-gray-500 dark:text-gray-400">
-              {new Date(item.Date).toLocaleDateString("ar-SA", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </p> */}
             <a
               href="#"
-              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-rose-900 rounded-lg hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-rose-900 rounded-lg hover:bg-rose-900/90 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               اقرأ المزيد
               <svg

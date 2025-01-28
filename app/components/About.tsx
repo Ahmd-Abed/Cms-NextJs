@@ -26,7 +26,7 @@ const About: React.FC<AboutProps> = ({ about }) => {
         <h2 className="text-xl font-bold">من نحن؟</h2>
       </div>
       {/* Grey Background Div */}
-      <div className="bg-gray-200 flex p-4 rounded-md">
+      <div className="bg-gray-100 flex p-4 rounded-md">
         {/* Image Section */}
         <div className="w-1/2">
           <img
@@ -37,12 +37,14 @@ const About: React.FC<AboutProps> = ({ about }) => {
         </div>
 
         {/* Text Section with Flex Column and Space Between */}
-        <div className="w-1/2 pr-4 flex flex-col justify-between">
+        <div className="w-1/2 pr-4 flex flex-col">
           <h1 className="text-2xl font-bold text-black mb-2">
             {about[0].Title}
           </h1>
-          <div className="flex-grow" /> {/* Spacer */}
-          <p className="text-lg text-gray-700">{about[0].Description}</p>
+          {/* <div className="flex-grow" /> Spacer */}
+          <p className="text-lg text-gray-700 my-4 p-3">
+            {about[0].Description}
+          </p>
         </div>
       </div>
     </div>

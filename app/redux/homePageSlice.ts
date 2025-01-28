@@ -13,6 +13,7 @@ interface HomePageData {
     ContentHomePage: Array<object>;
     carousel_collections: Array<object>;
     news_collections: Array<object>;
+    Footer: Array<object>;
   };
   meta: object;
 }
