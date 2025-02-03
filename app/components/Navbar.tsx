@@ -44,7 +44,9 @@ const NavBar: React.FC<NavbarProps> = ({ navbarItems }) => {
                     : "border-custom-animation-bottom"
                 }`}
               >
-                {item.SubItem && item.SubItem.length > 0 ? (
+                {item.SubItem &&
+                item.SubItem.filter((item) => item.IsShown == true).length >
+                  0 ? (
                   <>
                     <button
                       onClick={() => handleItemClick(item.id)}
@@ -69,7 +71,9 @@ const NavBar: React.FC<NavbarProps> = ({ navbarItems }) => {
                     </button>
                     <div className="absolute hidden  group-hover:block bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 ">
                       <ul className="py-2 text-sm text-gray-700 dark:text-gray-400">
-                        {item.SubItem.map((subItem) => (
+                        {item.SubItem.filter(
+                          (item) => item.IsShown == true
+                        ).map((subItem) => (
                           <li
                             key={subItem.id}
                             className={`relative group ${

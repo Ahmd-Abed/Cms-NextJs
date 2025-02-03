@@ -11,6 +11,9 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        rose: {
+          900: "#79133e", // Override Tailwind's default rose-900
+        },
       },
     },
   },

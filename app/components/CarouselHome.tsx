@@ -94,6 +94,7 @@ interface CarouselItem {
   Description: string;
   LinkLabel: string;
   Image: CarouselItemImage;
+  IsShown: boolean;
 }
 
 interface CarouselItemImage {
@@ -106,6 +107,9 @@ interface CarouselProps {
 
 const CarouselHome: React.FC<CarouselProps> = ({ carouselItems }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const filteredCarouselItems = carouselItems.filter(
+    (item) => item.IsShown == true
+  );
   // useEffect(() => {
   //   const interval = setInterval(() => {
   //     setCurrentSlideIndex((prevIndex) =>
@@ -118,13 +122,13 @@ const CarouselHome: React.FC<CarouselProps> = ({ carouselItems }) => {
 
   const previous = () => {
     setCurrentSlideIndex((prevIndex) =>
-      prevIndex === 0 ? carouselItems.length - 1 : prevIndex - 1
+      prevIndex === 0 ? filteredCarouselItems.length - 1 : prevIndex - 1
     );
   };
 
   const next = () => {
     setCurrentSlideIndex((prevIndex) =>
-      prevIndex === carouselItems.length - 1 ? 0 : prevIndex + 1
+      prevIndex === filteredCarouselItems.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -180,7 +184,7 @@ const CarouselHome: React.FC<CarouselProps> = ({ carouselItems }) => {
 
       {/* Slides */}
       <div className="relative min-h-[50svh] w-full">
-        {carouselItems.map((slide, index) => (
+        {filteredCarouselItems.map((slide, index) => (
           <div
             key={slide.id}
             className={`absolute inset-0 transition-opacity duration-1000 ${
@@ -214,7 +218,7 @@ const CarouselHome: React.FC<CarouselProps> = ({ carouselItems }) => {
 
       {/* Indicators */}
       <div className="absolute rounded-md bottom-3 md:bottom-5 left-1/2 z-20 flex -translate-x-1/2 gap-4 md:gap-3 px-1.5 py-1 md:px-2">
-        {carouselItems.map((_, index) => (
+        {filteredCarouselItems.map((_, index) => (
           <button
             key={index}
             className={`size-2 cursor-pointer w-5 h-1 transition ${

@@ -8,12 +8,14 @@ import { homePageModel, NavbarItem } from "@/app/models/homePageModel";
 import { fetchHomeData } from "@/app/redux/homePageSlice";
 import { wrapper } from "@/app/redux/store";
 import React from "react";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import FAQ from "@/app/components/FAQ";
 interface NavBarItem {
   id: number;
   Label: string;
   Link: string;
   IsShown: boolean;
-  SubItem: NavBarItem[]; // Recursive type for sub-items
+  SubItem: NavBarItem[]; // Recursive type
 }
 interface CarouselItemImage {
   url: string;
@@ -24,7 +26,8 @@ interface CarouselItem {
   Link: string;
   Description: string;
   LinkLabel: string;
-  Image: CarouselItemImage; // Recursive type for sub-items
+  Image: CarouselItemImage;
+  IsShown: boolean;
 }
 interface AboutImage {
   url: string;
@@ -40,6 +43,11 @@ interface IQuickLink {
   Label: string;
   Link: string;
 }
+interface IFAQ {
+  Question: string;
+  Answer: string;
+  IsShown: boolean;
+}
 
 interface NewsImages {
   url: string;
@@ -51,6 +59,7 @@ interface INews {
   Description: string;
   Image: NewsImages[];
   Date: Date;
+  IsShown: boolean;
 }
 interface FooterItem {
   id: number;
@@ -70,6 +79,7 @@ interface HomePageProps {
   news: INews[] | [];
   quickLinks: IQuickLink[] | [];
   footerItems: FooterItem[] | [];
+  faq: IFAQ[] | [];
 }
 const page: React.FC<HomePageProps> = ({
   //homePageData,
@@ -81,6 +91,7 @@ const page: React.FC<HomePageProps> = ({
   news,
   quickLinks,
   footerItems,
+  faq,
 }) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -91,6 +102,7 @@ const page: React.FC<HomePageProps> = ({
       <About about={about} />
       <News news={news} />
       <QuickLinks links={quickLinks} />
+      <FAQ faq={faq} />
       <Footer footerItems={footerItems} />
     </div>
   );
@@ -171,7 +183,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         //   : [],
         navbarItems: state.homePage.homePageData
           ? JSON.parse(
-              JSON.stringify(state.homePage.homePageData?.data?.NavBar)
+              JSON.stringify(
+                state.homePage.homePageData?.data?.NavBar.filter(
+                  (item: any) => item.IsShown == true
+                )
+              )
             )
           : [],
         // carouselItems: state.homePage.homePageData
@@ -202,6 +218,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
           ? state.homePage.homePageData.data?.ContentHomePage.filter(
               (item: any) => item.__component === "quick-links.quick-links"
             ).flatMap((item: any) => item.quick_links_collections || [])
+          : [],
+        faq: state.homePage.homePageData
+          ? state.homePage.homePageData.data?.ContentHomePage.filter(
+              (item: any) => item.__component === "faq.faq"
+            ).flatMap((item: any) => item.faq_collections || [])
           : [],
         footerItems: state.homePage.homePageData
           ? JSON.parse(

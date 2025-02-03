@@ -111,3 +111,18 @@ body {
 .foot-links:hover::after {
   width: 10%;
 }
+
+.shape::before {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 0;
+  height: 10%;
+  background-color: #79133e;
+  right: 21px;
+  transition: width 0.3s ease-in-out;
+}
+
+.shape.open::before {
+  width: 10px;
+}

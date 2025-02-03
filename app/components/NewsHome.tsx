@@ -11,6 +11,7 @@ interface INews {
   Description: string;
   Image: NewsImages[];
   Date: Date;
+  IsShown: boolean;
 }
 
 interface NewsProps {
@@ -40,8 +41,8 @@ const News: React.FC<NewsProps> = ({ news }) => {
 
     return () => observer.disconnect();
   }, []);
-
-  const sortedNews = [...news].sort(
+  const filteredNews = news.filter((item) => item.IsShown == true);
+  const sortedNews = [...filteredNews].sort(
     (a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime()
   );
 
@@ -49,7 +50,7 @@ const News: React.FC<NewsProps> = ({ news }) => {
     <div
       ref={newsRef}
       dir="rtl"
-      className="flex flex-wrap justify-around m-4 rtl text-right"
+      className="flex flex-wrap gap-10 m-4 rtl text-right"
     >
       {sortedNews.map((item) => (
         <div
