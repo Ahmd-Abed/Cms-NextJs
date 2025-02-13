@@ -50,7 +50,7 @@ import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const STRAPI_API_URL =
-  "http://127.0.0.1:1337/api/Home-page?populate[NavBar][populate]=*&populate[Footer][populate]=*&populate[ContentHomePage][populate]=*&populate[carousel_collections][populate]=Image&populate[news_collections][populate]=Image";
+  "http://127.0.0.1:1337/api/Home-page?populate[NavBar][populate]=*&populate[Footer][populate]=*&populate[ContentHomePage][populate]=*&populate[carousel_collections][populate]=Image&populate[news_collections][populate]=Image&populate[quick_links_collections][populate]=Logo";
 
 export default async function handler(
   req: NextApiRequest,

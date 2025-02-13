@@ -1,22 +1,12 @@
 import React from "react";
 
-interface AboutImage {
-  url: string;
-}
-
-interface IAbout {
-  id: number;
-  Title: string;
-  Link: string;
-  Description: string;
-  Image: AboutImage;
-}
+import { About } from "@/app/models/homePageModel";
 
 interface AboutProps {
-  about: IAbout[] | [];
+  about: About[] | [];
 }
 
-const About: React.FC<AboutProps> = ({ about }) => {
+const AboutComponent: React.FC<AboutProps> = ({ about }) => {
   if (about.length === 0) return null; // Handle case where 'about' is empty
 
   return (
@@ -51,4 +41,4 @@ const About: React.FC<AboutProps> = ({ about }) => {
   );
 };
 
-export default About;
+export default AboutComponent;

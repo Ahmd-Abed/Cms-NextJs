@@ -14,6 +14,9 @@ export default {
         rose: {
           900: "#79133e", // Override Tailwind's default rose-900
         },
+        teal: {
+          800: "#235D37", // Override Tailwind's default rose-900
+        },
       },
     },
   },

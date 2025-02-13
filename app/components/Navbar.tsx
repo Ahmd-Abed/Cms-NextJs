@@ -2,16 +2,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import logo from "@/JOIN-LOGO.png";
 
-interface NavBarItem {
-  id: number;
-  Label: string;
-  Link: string;
-  IsShown: boolean;
-  SubItem: NavBarItem[]; // Recursive type for sub-items
-}
+import { NavbarItem } from "@/app/models/homePageModel";
 
 interface NavbarProps {
-  navbarItems: NavBarItem[] | [];
+  navbarItems: NavbarItem[] | [];
 }
 
 const NavBar: React.FC<NavbarProps> = ({ navbarItems }) => {
@@ -44,15 +38,15 @@ const NavBar: React.FC<NavbarProps> = ({ navbarItems }) => {
                     : "border-custom-animation-bottom"
                 }`}
               >
-                {item.SubItem &&
-                item.SubItem.filter((item) => item.IsShown == true).length >
+                {item.subItems &&
+                item.subItems.filter((item) => item.isShown == true).length >
                   0 ? (
                   <>
                     <button
                       onClick={() => handleItemClick(item.id)}
                       className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-black-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
                     >
-                      {item.Label}
+                      {item.label}
                       <svg
                         className="w-2.5 h-2.5 ms-2.5 transform transition-transform duration-300 group-hover:rotate-180"
                         aria-hidden="true"
@@ -71,35 +65,35 @@ const NavBar: React.FC<NavbarProps> = ({ navbarItems }) => {
                     </button>
                     <div className="absolute hidden  group-hover:block bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 ">
                       <ul className="py-2 text-sm text-gray-700 dark:text-gray-400">
-                        {item.SubItem.filter(
-                          (item) => item.IsShown == true
-                        ).map((subItem) => (
-                          <li
-                            key={subItem.id}
-                            className={`relative group ${
-                              activeItem === item.id
-                                ? " border-custom"
-                                : "border-custom-animation-right"
-                            }`}
-                          >
-                            <a
-                              href={subItem.Link}
-                              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        {item.subItems
+                          .filter((item) => item.isShown == true)
+                          .map((subItem) => (
+                            <li
+                              key={subItem.id}
+                              className={`relative group ${
+                                activeItem === item.id
+                                  ? " border-custom"
+                                  : "border-custom-animation-right"
+                              }`}
                             >
-                              {subItem.Label}
-                            </a>
-                          </li>
-                        ))}
+                              <a
+                                href={subItem.link}
+                                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                {subItem.label}
+                              </a>
+                            </li>
+                          ))}
                       </ul>
                     </div>
                   </>
                 ) : (
                   <a
                     onClick={() => handleItemClick(item.id)}
-                    href={item.Link}
+                    href={item.link}
                     className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-black-700 md:p-0 dark:text-white md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   >
-                    {item.Label}
+                    {item.label}
                   </a>
                 )}
               </li>

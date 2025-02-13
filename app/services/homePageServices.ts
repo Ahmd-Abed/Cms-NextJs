@@ -9,9 +9,8 @@ export async function fetchHomePageData(): Promise<homePageModel> {
       );
     }
     const data = await response.json();
-    console.log("Hu Ldata", JSON.parse(JSON.stringify(data)));
-    return data;
-    // return new homePageModel(data); // Return the instance of homePageModel
+    // Convert JSON data into homePageModel instance
+    return new homePageModel(data.data);
   } catch (error) {
     console.error("Error fetching HomePageData:", error);
     throw error; // Ensure the error is propagated to the caller

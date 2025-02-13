@@ -20,12 +20,9 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-height: 70px;
+  max-height: 70px;
 }
 
-.news-img {
-  height: 150px !important;
-}
 body {
   color: var(--foreground);
   background: var(--background);
@@ -82,6 +79,28 @@ body {
 .background-color {
   background-color: #79133e;
 }
+.section {
+  margin-block: 100px;
+}
+.section-title::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 4px;
+  background-color: #235d37;
+  transition: width 0.5s ease;
+}
+.news-shadow {
+  box-shadow: 0px -3px 5px 2px #00000008;
+  font-family: "Scheherazade serif";
+}
+.news-img {
+  filter: brightness(0.8);
+}
+.news-img:hover {
+  filter: brightness(0.7);
+  cursor: pointer;
+}
 .footer {
   background: #79133e url("@/footer-maroon-bg.png") center no-repeat;
   background-size: cover;
@@ -125,4 +144,32 @@ body {
 
 .shape.open::before {
   width: 10px;
+}
+/* CSS Code */
+.swiper-wrapper {
+  width: 100%;
+  height: max-content !important;
+  padding-bottom: 64px !important;
+  -webkit-transition-timing-function: linear !important;
+  transition-timing-function: linear !important;
+  position: relative;
+}
+.swiper-pagination-bullet {
+  background: #4f46e5;
+}
+.slick-prev:before,
+.slick-next:before {
+  color: #79133e !important;
+}
+.custom-display {
+  display: flex !important;
+  justify-content: center !important;
+}
+.slick-slide {
+  padding: 12px !important;
+  font-size: 25px !important;
+}
+.slick-prev:before,
+.slick-next:before {
+  font-size: 25px !important;
 }

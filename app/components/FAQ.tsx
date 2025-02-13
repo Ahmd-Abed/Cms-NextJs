@@ -1,18 +1,10 @@
 import React, { useState } from "react";
-
-interface IFAQ {
-  Question: string;
-  Answer: string;
-  IsShown: boolean;
-}
-
+import { Faq } from "../models/homePageModel";
 interface FAQProps {
-  faq: IFAQ[];
+  faq: Faq[] | [];
 }
-
-const FAQ: React.FC<FAQProps> = ({ faq }) => {
+const FAQComponent: React.FC<FAQProps> = ({ faq }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
@@ -25,7 +17,7 @@ const FAQ: React.FC<FAQProps> = ({ faq }) => {
       data-accordion="collapse"
     >
       {faq
-        .filter((item) => item.IsShown == true)
+        .filter((item) => item.isShown == true)
         .map((item, index) => (
           <div key={index}>
             <h2 id={`accordion-color-heading-${index}`}>
@@ -38,7 +30,7 @@ const FAQ: React.FC<FAQProps> = ({ faq }) => {
                 aria-expanded={openIndex === index}
                 aria-controls={`accordion-color-body-${index}`}
               >
-                <span className="text-lg font-bold ">{item.Question}</span>
+                <span className="text-lg font-bold ">{item.question}</span>
                 <svg
                   data-accordion-icon
                   className={`w-3 h-3 transform transition-all ${
@@ -76,7 +68,7 @@ const FAQ: React.FC<FAQProps> = ({ faq }) => {
                     >
                       <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
                     </svg>
-                    {item.Answer}
+                    {item.answer}
                   </span>
                 </p>
               </div>
@@ -87,4 +79,4 @@ const FAQ: React.FC<FAQProps> = ({ faq }) => {
   );
 };
 
-export default FAQ;
+export default FAQComponent;

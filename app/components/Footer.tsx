@@ -1,18 +1,12 @@
 import React, { useEffect, useRef } from "react";
 
-interface FooterItem {
-  id: number;
-  Label: string;
-  Link: string;
-  IsShown: boolean;
-  Footer: FooterItem[];
-}
+import { FooterItem } from "@/app/models/homePageModel";
 
-interface FooterProps {
+interface NavbarProps {
   footerItems: FooterItem[] | [];
 }
 
-const Footer: React.FC<FooterProps> = ({ footerItems }) => {
+const Footer: React.FC<NavbarProps> = ({ footerItems }) => {
   const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,25 +41,25 @@ const Footer: React.FC<FooterProps> = ({ footerItems }) => {
               className="fade-in opacity-0 transform translate-y-200 transition-all duration-1000"
             >
               <div className="mb-4">
-                <h4 className="font-bold text-lg">{item.Label}</h4>
+                <h4 className="font-bold text-lg">{item.label}</h4>
                 <div className="border-b-2 border-white w-full mt-2"></div>
               </div>
               <ul className="space-y-2">
-                {item.Footer.length > 0 ? (
-                  item.Footer.map((subItem) => (
+                {item.subItems.length > 0 ? (
+                  item.subItems.map((subItem) => (
                     <li
                       key={subItem.id}
                       className="hover:opacity-80 transition-opacity"
                     >
-                      <a href={subItem.Link} className="foot-links">
-                        {subItem.Label}
+                      <a href={subItem.link} className="foot-links">
+                        {subItem.label}
                       </a>
                     </li>
                   ))
                 ) : (
                   <li>
-                    <a href={item.Link} className="hover:underline">
-                      {item.Label}
+                    <a href={item.link} className="hover:underline">
+                      {item.label}
                     </a>
                   </li>
                 )}

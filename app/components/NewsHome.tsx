@@ -1,24 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import moment from "moment";
-
-interface NewsImages {
-  url: string;
-}
-
-interface INews {
-  id: number;
-  Title: string;
-  Description: string;
-  Image: NewsImages[];
-  Date: Date;
-  IsShown: boolean;
-}
-
+import { News } from "../models/homePageModel";
 interface NewsProps {
-  news: INews[] | [];
+  news: News[] | [];
 }
 
-const News: React.FC<NewsProps> = ({ news }) => {
+const NewsComponent: React.FC<NewsProps> = ({ news }) => {
   const newsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,67 +28,71 @@ const News: React.FC<NewsProps> = ({ news }) => {
 
     return () => observer.disconnect();
   }, []);
-  const filteredNews = news.filter((item) => item.IsShown == true);
+  const filteredNews = news.filter((item) => item.isShown == true);
   const sortedNews = [...filteredNews].sort(
-    (a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime()
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
   return (
-    <div
-      ref={newsRef}
-      dir="rtl"
-      className="flex flex-wrap gap-10 m-4 rtl text-right"
-    >
-      {sortedNews.map((item) => (
-        <div
-          key={item.id}
-          className="fade-in opacity-0 transform translate-y-1 transition-all duration-1000 mb-2 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-        >
-          <a href="#">
-            <img
-              className="rounded-t-lg max-h-150 w-96 news-img"
-              src={`http://127.0.0.1:1337${item.Image[0].url}`}
-              alt={item.Title}
-            />
-          </a>
-          <div className="p-5">
-            <a href="#">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white hover:text-rose-900 transition duration-300">
-                {item.Title}
-              </h5>
-            </a>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-3">
-              {item.Description}
-            </p>
-            <p className="mb-3 text-sm text-gray-500 dark:text-gray-400">
-              {moment(item.Date).locale("ar").format("DD MMMM YYYY")}
-            </p>
-            <a
-              href="#"
-              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-rose-900 rounded-lg hover:bg-rose-900/90 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              اقرأ المزيد
-              <svg
-                className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 5h12m0 0L9 1m4 4L9 9"
-                />
-              </svg>
-            </a>
-          </div>
+    <div className="section">
+      <div dir="rtl" className="flex m-4 justify-between px-6 rtl text-right">
+        <div className="section-title text-teal-800 text-2xl font-extrabold ">
+          الأخبار
         </div>
-      ))}
+        <div>
+          {" "}
+          <a
+            href="#"
+            className="inline-block mt-3  text-rose-900 text-sm hover:text-rose-900/80 transition-all"
+          >
+            قراءة المزيد &gt;
+          </a>
+        </div>
+      </div>
+      <div
+        ref={newsRef}
+        dir="rtl"
+        className="m-4 font-tajawal grid grid-cols-1 md:grid-cols-2 gap-6 px-6 rtl text-right"
+      >
+        {sortedNews.map((item) => (
+          <div
+            key={item.id}
+            className="fade-in opacity-0 transform translate-y-1 border-b-2  transition-all duration-1000 flex items-center bg-white  border-teal-500 rounded-lg news-shadow p-4 dark:bg-gray-800 dark:border-gray-700"
+          >
+            <div className="news-img flex-shrink-0 w-32 h-44 md:w-40 md:h-44 rounded-md overflow-hidden border-2 border-teal-800">
+              <img
+                className="w-full  h-full object-cover"
+                src={`http://127.0.0.1:1337${item.image[0].url}`}
+                alt={item.title}
+              />
+            </div>
+
+            <div className="flex-grow pr-6">
+              <p className="text-gray-500 text-sm flex items-center gap-1">
+                <i className="ml-2 fa-solid fa-calendar"></i>
+                {moment(item.date).locale("ar").format("DD MMMM YYYY")}
+              </p>
+
+              <h5 className="my-3 text-sm md:text-xl lg:text-lg xl:text-lg font-bold tracking-tight text-gray-900 dark:text-white hover:text-rose-900 transition duration-300">
+                {item.title}
+              </h5>
+
+              <p className="mt-1 text-gray-600 dark:text-gray-400 line-clamp-3 text-sm">
+                {item.description}
+              </p>
+
+              <a
+                href="#"
+                className="inline-block mt-3  text-rose-900  text-sm hover:text-rose-900/80 transition-all"
+              >
+                قراءة المزيد &gt;
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default News;
+export default NewsComponent;
