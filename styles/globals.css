@@ -6,7 +6,10 @@
   --background: #ffffff;
   --foreground: #171717;
 }
-
+img {
+  height: revert-layer;
+  display: inline !important;
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

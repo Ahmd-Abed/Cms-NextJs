@@ -64,10 +64,10 @@ const MediaPage: React.FC<MediaProps> = ({ mediaData, loading, error }) => {
 
       <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 mt-4">
         {activeTab === "photos" && (
-          <ImagesGalleryComponent images={imageGalleryItems} />
+          <ImagesGalleryComponent images={mediaData.Images} />
         )}
         {activeTab === "videos" && (
-          <VideossGalleryComponent videos={videoGalleryItems} />
+          <VideossGalleryComponent videos={mediaData.Videos} />
         )}
       </div>
     </div>
